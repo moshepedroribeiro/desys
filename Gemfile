@@ -10,6 +10,9 @@ gem "turbo-rails"
 gem "stimulus-rails"
 gem "jbuilder"
 gem 'pg'
+gem 'bootstrap-sass'
+gem 'jquery-rails'
+gem 'jquery-ui-rails'
 
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 gem "bootsnap", require: false
@@ -27,3 +30,6 @@ group :test do
   gem "selenium-webdriver"
   gem "webdrivers"
 end
+
+# Use Redis for Action Cable
+gem "redis", "~> 4.0"

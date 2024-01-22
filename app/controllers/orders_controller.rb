@@ -13,6 +13,7 @@ class OrdersController < ApplicationController
   # GET /orders/new
   def new
     @order = Order.new
+    @order.items.build
   end
 
   # GET /orders/1/edit
@@ -58,13 +59,22 @@ class OrdersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_order
-      @order = Order.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def order_params
-      params.fetch(:order, {})
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_order
+    @order = Order.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def order_params
+    params
+      .require(:order)
+      .permit(
+        :id,
+        :customer_name,
+        :time_placed,
+        :total_price,
+        items_attributes: [:id, :product_name, :quantity, :unity_price, :discount, :total_price, :_destroy]
+      )
+  end
 end

@@ -1,4 +1,7 @@
-<%= form_with(model: order) do |form| %>
+<%= form_with(model: order, data: {
+  controller: "nested-form",
+  nested_form_wrapper_selector_value: '.nested-form-wrapper'
+}) do |form| %>
   <% if order.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h2>
@@ -11,6 +14,30 @@
     </div>
   <% end %>
 
+  <div>
+    <%= form.label :customer_name, 'Customer name' %>
+    <%= form.text_field :customer_name %>
+  </div>
+
+  <div>
+    <%= form.label :time_placed, 'Time placed' %>
+    <%= form.text_field :time_placed %>
+  </div>
+
+  <%# Start Custom Logic Here %>
+  <template data-nested-form-target="template">
+    <% form.fields_for :items, Item.new, child_index: 'NEW_RECORD' do |task_fields| %>
+      <%= render 'orders/items_form', f: task_fields %>
+    <% end %>
+  </template>
+
+  <% form.fields_for :items do |task_fields| %>
+    <%= render 'orders/items_form', f: task_fields %>
+  <% end %>
+
+  <div data-nested-form-target="target"></div>
+  <button type="button" data-action="nested-form#add">Add new Item</button>
+  <%# End Custom Logic %>
   <div>
     <%= form.submit %>
   </div>

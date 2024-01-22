@@ -34,3 +34,10 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 /Gemfile.lock
+/vendor/javascript/@hotwired--stimulus.js
+/vendor/javascript/@popperjs--core.js
+/vendor/javascript/bootstrap.js
+/.idea/dataSources.xml
+/vendor/javascript/jquery.js
+/vendor/javascript/stimulus-rails-nested-form.js
+/yarn.lock

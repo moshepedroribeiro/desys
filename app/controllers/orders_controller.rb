@@ -23,19 +23,7 @@ class OrdersController < ApplicationController
   # POST /orders or /orders.json
   def create
     @order = Order.new(order_params)
-
-    total_price_items = 0
-    @order.items.each do |item|
-      item.total_price = (item.quantity * item.unit_price)
-
-      if item.discount.present?
-        item.total_price -= item.discount
-      end
-
-      total_price_items += item.total_price
-    end
-
-    @order.total_price = total_price_items
+    @order.total_price = Items::Service.calculate_total_price_order(@order)
 
     respond_to do |format|
       if @order.save
@@ -50,6 +38,8 @@ class OrdersController < ApplicationController
 
   # PATCH/PUT /orders/1 or /orders/1.json
   def update
+    @order.total_price = Items::Service.calculate_total_price_order(@order)
+
     respond_to do |format|
       if @order.update(order_params)
         format.html { redirect_to order_url(@order), notice: "Order was successfully updated." }
@@ -88,7 +78,7 @@ class OrdersController < ApplicationController
         :customer_name,
         :time_placed,
         :total_price,
-        items_attributes: [:id, :product_name, :quantity, :unit_price, :discount]
+        items_attributes: [:id, :product_name, :quantity, :unit_price, :discount, :_destroy]
       )
   end
 end

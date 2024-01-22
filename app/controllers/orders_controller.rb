@@ -74,7 +74,7 @@ class OrdersController < ApplicationController
         :customer_name,
         :time_placed,
         :total_price,
-        items: [:id, :product_name, :quantity, :unity_price, :discount, :total_price, :_destroy]
+        items_attributes: [:id, :product_name, :quantity, :unity_price, :discount]
       )
   end
 end

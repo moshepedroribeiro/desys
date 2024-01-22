@@ -24,6 +24,19 @@ class OrdersController < ApplicationController
   def create
     @order = Order.new(order_params)
 
+    total_price_items = 0
+    @order.items.each do |item|
+      item.total_price = (item.quantity * item.unit_price)
+
+      if item.discount.present?
+        item.total_price -= item.discount
+      end
+
+      total_price_items += item.total_price
+    end
+
+    @order.total_price = total_price_items
+
     respond_to do |format|
       if @order.save
         format.html { redirect_to order_url(@order), notice: "Order was successfully created." }
@@ -50,6 +63,7 @@ class OrdersController < ApplicationController
 
   # DELETE /orders/1 or /orders/1.json
   def destroy
+    @order.items.destroy_all
     @order.destroy
 
     respond_to do |format|
@@ -74,7 +88,7 @@ class OrdersController < ApplicationController
         :customer_name,
         :time_placed,
         :total_price,
-        items_attributes: [:id, :product_name, :quantity, :unity_price, :discount]
+        items_attributes: [:id, :product_name, :quantity, :unit_price, :discount]
       )
   end
 end

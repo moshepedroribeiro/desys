@@ -26,12 +26,12 @@
 
   <%# Start Custom Logic Here %>
   <template data-nested-form-target="template">
-    <% form.fields_for :items, Item.new, child_index: 'NEW_RECORD' do |task_fields| %>
+    <%= form.fields_for :items, Item.new, child_index: 'NEW_RECORD' do |task_fields| %>
       <%= render 'orders/items_form', f: task_fields %>
     <% end %>
   </template>
 
-  <% form.fields_for :items do |task_fields| %>
+  <%= form.fields_for :items do |task_fields| %>
     <%= render 'orders/items_form', f: task_fields %>
   <% end %>
 

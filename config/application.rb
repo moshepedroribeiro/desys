@@ -18,6 +18,6 @@ module Desys
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
-    # Rails.application.config.assets.precompile += %w( example.css )
+    Rails.application.config.assets.precompile += %w( bootstrap.min.js popper.js )
   end
 end

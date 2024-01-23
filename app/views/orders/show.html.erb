@@ -1,10 +1,30 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @order %>
+<h3>Customer name: <%= @order.customer_name %></h3>
+<h5>Price: <%= @order.total_price %></h5>
+<table class="table table-striped">
+  <tr>
+    <th>Product Name</th>
+    <th>Quantity</th>
+    <th>Unit Price</th>
+    <th>Discount</th>
+    <th>Total Price</th>
+  </tr>
+
+  <% @order.items.each do |item| %>
+    <tr>
+      <td><%= item.product_name %></td>
+      <td><%= item.quantity %></td>
+      <td><%= item.unit_price %></td>
+      <td><%= item.discount %></td>
+      <td><%= item.total_price %></td>
+    </tr>
+  <% end %>
+</table>
 
 <div>
-  <%= link_to "Edit this order", edit_order_path(@order) %> |
-  <%= link_to "Back to orders", orders_path %>
-
-  <%= button_to "Destroy this order", @order, method: :delete %>
+  <%= link_to "Edit this order", edit_order_path(@order), class: 'btn btn-primary' %> |
+  <%= link_to "Back to orders", orders_path, class: 'btn btn-dark' %>
+  <br/><br/>
+  <%= button_to "Destroy this order", @order, method: :delete, class: 'btn btn-danger' %>
 </div>

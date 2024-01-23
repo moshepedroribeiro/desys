@@ -25,4 +25,10 @@ RSpec.describe OrdersController, type: :controller do
     delete :destroy, params: { id: order.id }
     expect(flash[:notice]).to match(/successfully destroyed/)
   end
+
+  it 'show' do
+    order = Order.last
+    get :show, params: { id: order.id }
+    expect(response.status).to be(200)
+  end
 end

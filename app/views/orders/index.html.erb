@@ -3,12 +3,20 @@
 <h1>Orders</h1>
 
 <div id="orders">
+  <table class="table table-striped">
+    <tr>
+      <th>Customer Name</th>
+      <th>Total Price</th>
+    </tr>
+
   <% @orders.each do |order| %>
     <%= render order %>
-    <p>
-      <%= link_to order.customer_name, order %>
-    </p>
+      <tr>
+        <td><%= link_to order.customer_name, order %></td>
+        <td><%= order.total_price %></td>
+      </tr>
   <% end %>
+  </table>
 </div>
 
-<%= link_to "New order", new_order_path %>
+<%= link_to "New order", new_order_path, class: 'btn btn-primary' %>
